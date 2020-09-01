@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="torchvideotransforms",
-    version="0.1.2",
+    version="0.1.3",
     author="Yana Hasson",
     author_email="yana.hasson.inria@gmail.com",
     description="Data augmentation for videos as stack of images for PyTorch",
