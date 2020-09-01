@@ -371,6 +371,37 @@ class ColorJitter(object):
                             'but got list of {0}'.format(type(clip[0])))
         return jittered_clip
 
+
+class TemporalJitter(object):
+    """Randomly select subset of frames from the video
+
+    Args:
+    n_frames (sequence): Range of number of frames to
+        select from (drawing from a uniform distribution)
+    """
+
+    def __init__(self, n_frames):
+        if len(n_frames) != 2:
+            raise ValueError('n_frames must be of len 2.')
+
+        self.n_frames = n_frames
+
+    def __call__(self, clip):
+        """
+        Args:
+        img (PIL.Image or numpy.ndarray): List of images to be cropped
+        in format (h, w, c) in numpy.ndarray
+
+        Returns:
+        PIL.Image or numpy.ndarray: Cropped list of images
+        """
+        N = random.randint(self.n_frames[0], self.n_frames[1])
+        n_start_max = len(clip) - 1 - N
+        n_start = random.randint(0, n_start_max)
+
+        return clip[n_start:n_start+N]
+
+
 class Normalize(object):
     """Normalize a clip with mean and standard deviation.
     Given mean: ``(M1,...,Mn)`` and std: ``(S1,..,Sn)`` for ``n`` channels, this transform
